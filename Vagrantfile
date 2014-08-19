@@ -83,6 +83,10 @@ function mysql {
    apt-get install -y mysql-server
    sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
    service mysql restart
+   # create the backup crontab
+   crontab <<EOF
+   00 16 * * * /vagrant/mysetup/backup-mysql.sh
+   EOF
 }
 
 myEcho "____________________"
