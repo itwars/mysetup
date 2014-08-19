@@ -1,7 +1,7 @@
 #! /bin/bash
  
 TIMESTAMP=$(date +"%F")
-BACKUP_DIR="/home/vagrant/$TIMESTAMP"
+BACKUP_DIR="/vagrant/$TIMESTAMP"
 MYSQL_USER="root"
 MYSQL=/usr/bin/mysql
 MYSQL_PASSWORD="root"
