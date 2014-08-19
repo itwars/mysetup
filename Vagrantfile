@@ -102,6 +102,8 @@ apt-get -y dist-upgrade
 apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git
 apt-get -y autoremove
 apt-get -y autoclean
+cp /vagrant/mysetup/.tmux.conf ~/
+cp /vagrant/mysetup/.bashrc ~/
 
 while test $# -gt 0
 do
