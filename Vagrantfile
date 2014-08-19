@@ -83,10 +83,9 @@ function mysql {
    apt-get install -y mysql-server
    sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
    service mysql restart
+
    # create the backup crontab
-   crontab <<EOF
-   00 16 * * * /vagrant/mysetup/backup-mysql.sh
-   EOF
+   (crontab -u vagrant -l ; echo "00 16 * * * /vagrant/mysetup/backup-mysql.sh") | crontab -u vagrant -
 }
 
 myEcho "____________________"
@@ -100,10 +99,6 @@ echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multi
 apt-get -y update
 apt-get -y dist-upgrade
 apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git
-apt-get -y autoremove
-apt-get -y autoclean
-cp /vagrant/mysetup/.tmux.conf ~/
-cp /vagrant/mysetup/.bashrc ~/
 
 while test $# -gt 0
 do
@@ -122,6 +117,10 @@ do
     shift
 done
 
+apt-get -y autoremove
+apt-get -y autoclean
+cp /vagrant/mysetup/.tmux.conf /home/vagrant/
+cp /vagrant/mysetup/.bashrc /home/vagrant/
 
 SCRIPT
 
