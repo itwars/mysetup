@@ -3,10 +3,10 @@
 # for examples
 
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+#case $- in
+#    *i*) ;;
+#      *) return;;
+#esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -123,7 +123,8 @@ export TERM=xterm
 export LESS="-RS#3NM~g" 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-alias vi='/usr/local/bin/vim'
+#alias vi='/usr/local/bin/vim'
+alias vi='vim'
 alias pro='cd ~/Documents/projects'
 alias UP='sudo apt-get update;sudo apt-get dist-upgrade'
 alias c='chromium-browser > /dev/null 2>&1'
@@ -136,8 +137,7 @@ alias umountdcard='diskutil unmountDisk /dev/disk1'
 alias listdisk='diskutil list'
 alias clean='sudo gem clean;brew cleanup;brew cask cleanup'
 
-
-. ~/scripts/z.sh
+. /vagrant/mysetup/z.sh
 
 # Test de completion GEM
 alias gemdir='gem env gemdir'
@@ -213,7 +213,7 @@ ssh() {
 NPM_PACKAGES="~/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH=$PATH:$NPM_PACKAGES/bin
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+#export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export TERM=xterm-256color
 
@@ -225,10 +225,10 @@ then
         echo "tmux failed to start"
     fi
 
-if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
-       source `brew --prefix`/etc/bash_completion.d/vagrant
-       source `brew --prefix`/etc/bash_completion.d/brew_bash_completion.sh
-fi
+#if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
+#       source `brew --prefix`/etc/bash_completion.d/vagrant
+#       source `brew --prefix`/etc/bash_completion.d/brew_bash_completion.sh
+#fi
 export PATH=/usr/local/bin:$PATH:/usr/texbin
 export HOMEBREWCASKOPTS="--appdir=/Applications"
 

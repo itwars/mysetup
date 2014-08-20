@@ -3,3 +3,4 @@ choco install virtualbox vagrant git
 vagrant plugin install vagrant-vbguest
 git clone https://github.com/itwars/mysetup
 copy mysetup\Vagrantfile .
+git clone https://github.com/Lokaltog/powerline-fonts.git

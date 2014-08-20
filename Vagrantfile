@@ -121,6 +121,9 @@ apt-get -y autoremove
 apt-get -y autoclean
 cp /vagrant/mysetup/.tmux.conf /home/vagrant/
 cp /vagrant/mysetup/.bashrc /home/vagrant/
+cp /vagrant/mysetup/.vimrc /home/vagrant/
+cd /vagrant/mysetup
+wget https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 SCRIPT
 
