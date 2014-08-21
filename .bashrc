@@ -217,13 +217,13 @@ export PATH=$PATH:$NPM_PACKAGES/bin
 
 export TERM=xterm-256color
 
-if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
-then
-    STARTED_TMUX=1; export STARTED_TMUX
-    sleep 1
-    ( (tmux -2 has-session -t remote && tmux -2 attach-session -t remote) || (tmux -2 new-session -s remote) ) && exit 0
-        echo "tmux failed to start"
-    fi
+#if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
+#then
+#    STARTED_TMUX=1; export STARTED_TMUX
+#    sleep 1
+#    ( (tmux -2 has-session -t remote && tmux -2 attach-session -t remote) || (tmux -2 new-session -s remote) ) && exit 0
+#        echo "tmux failed to start"
+#    fi
 
 #if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
 #       source `brew --prefix`/etc/bash_completion.d/vagrant

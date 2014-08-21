@@ -119,9 +119,12 @@ done
 
 apt-get -y autoremove
 apt-get -y autoclean
+git clone https://github.com/itwars/mysetup
 cp /home/vagrant/mysetup/.tmux.conf /home/vagrant/
 cp /home/vagrant/mysetup/.bashrc    /home/vagrant/
 cp /home/vagrant/mysetup/.vimrc     /home/vagrant/
+cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
+cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
 cd /home/vagrant/mysetup
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh
 
@@ -136,10 +139,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.network :forwarded_port, guest: 80, host: 80
    config.vm.network :forwarded_port, guest: 3001, host: 3001
    config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", 512]
-      vb.customize ["modifyvm", :id, "--cpus", 1]
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+      vb.customize ["modifyvm", :id, "--cpus", 2]
       vb.customize ["modifyvm", :id, "--chipset", "ich9"]
-      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
    end
