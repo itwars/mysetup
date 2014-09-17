@@ -137,7 +137,7 @@ alias umountdcard='diskutil unmountDisk /dev/disk1'
 alias listdisk='diskutil list'
 alias clean='sudo gem clean;brew cleanup;brew cask cleanup'
 
-. /home/vagrant/mysetup/z.sh
+. /vagrant/mysetup/z.sh
 
 # Test de completion GEM
 alias gemdir='gem env gemdir'
