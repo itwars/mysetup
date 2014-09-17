@@ -28,15 +28,21 @@ function nginx {
    apt-get -y update
    apt-get install -y nginx
    cat > /etc/nginx/sites-available/default << EOF
+
 server {
-        listen 80;
+        listen 80 default_server;
         root /vagrant;
-        index index.html index.htm;
-        server_name localhost;
-        server_tokens off;
 
         location / {
-                try_files $uri $uri/ /index.html;
+                try_files  $uri $uri/ /index.php$is_args$args;
+        }
+
+        location ~ .php$ {
+               try_files $uri /index.php =404;
+               fastcgi_pass 127.0.0.1:9000;
+               fastcgi_index index.php;
+               fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+               include fastcgi_params;
         }
         location ~ \.(ico|css|js|gif|jpg|jpeg|png|gz|ttf|woff|svg|eot|json) {
                 expires max;
@@ -50,14 +56,9 @@ server {
                 add_header Cache-Control "public, must-revalidate, proxy-revalidate";
                 add_header X-Powered-By "NodeJS";
         }
-
-        location ~ .php$ {
-
-               fastcgi_pass 127.0.0.1:9000;
-               fastcgi_index index.php;
-               include fastcgi_params;
-        }
 }
+
+
 EOF
    service nginx restart
 }
