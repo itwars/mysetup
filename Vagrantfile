@@ -128,7 +128,7 @@ cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
 cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
 cd /home/vagrant/mysetup
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh
-
+timedatectl set-timezone Europe/Paris
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
