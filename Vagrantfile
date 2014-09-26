@@ -132,6 +132,8 @@ timedatectl set-timezone Europe/Paris
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+   config.vm.define "project" do "project"
+   end
 #   config.vm.name = "vincent-obs"
    config.vm.box = "trusty64-LTS"
 #   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
