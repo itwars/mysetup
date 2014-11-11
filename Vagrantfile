@@ -128,6 +128,7 @@ cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
 cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
 cd /home/vagrant/mysetup
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 timedatectl set-timezone Europe/Paris
 SCRIPT
 
