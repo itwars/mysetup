@@ -1,2 +1,14 @@
-install: --no-rdoc --no-ri 
-update:  --no-rdoc --no-ri
+# http://docs.rubygems.org/read/chapter/11
+--- 
+gem: --no-ri --no-rdoc
+benchmark: false
+verbose: true
+update_sources: true
+sources: 
+- http://gems.rubyforge.org/
+- http://rubygems.org/
+backtrace: true
+bulk_threshold: 1000
+ 
+# HTTP Proxy options
+# http-proxy: http://example.com:80
