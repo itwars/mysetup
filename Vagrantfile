@@ -18,6 +18,7 @@ function nodejs {
    apt-add-repository -y ppa:chris-lea/node.js
    apt-get -y update
    apt-get -y install nodejs
+   mkdir /home/vagrant/.npm-packages
 }
 
 function nginx {
@@ -128,16 +129,14 @@ cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
 cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
 cd /home/vagrant/mysetup
 wget https://raw.githubusercontent.com/rupa/z/master/z.sh
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/gmarik/Vundle.vim.git /home/vagrant/.vim/bundle/Vundle.vim
 timedatectl set-timezone Europe/Paris
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   config.vm.define "project" do "project"
+   config.vm.define "MyVagrantBox" do "MyVagrantBox"
    end
-#   config.vm.name = "vincent-obs"
    config.vm.box = "trusty64-LTS"
-#   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
    config.vm.provision "shell", inline: $script , args: ["nginx","php","mysql","nodejs"]
    config.vm.network :forwarded_port, guest: 3000, host: 3000
    config.vm.network :forwarded_port, guest: 80, host: 8080
