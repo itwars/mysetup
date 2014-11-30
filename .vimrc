@@ -5,13 +5,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'itchyny/lightline.vim'
-"Plugin 'Valloric/YouCompleteMe'
 Plugin 'jordwalke/flatlandia'
 Plugin 'Yggdroot/indentLine'
 Plugin 'xterm-color-table.vim'
-"Plugin 'shellsea'
-"Plugin 'vincent'
-"Plugin 'https://github.com/othree/javascript-libraries-syntax.vim.git'
 Plugin 'SyntaxComplete'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'

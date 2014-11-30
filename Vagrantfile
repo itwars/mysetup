@@ -140,7 +140,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
    config.vm.provision "shell", inline: $script , args: ["nginx","php","mysql","nodejs"]
    config.vm.network :forwarded_port, guest: 3000, host: 3000
-   config.vm.network :forwarded_port, guest: 80, host: 80
+   config.vm.network :forwarded_port, guest: 80, host: 8080
    config.vm.network :forwarded_port, guest: 3001, host: 3001
    config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", 1024]
