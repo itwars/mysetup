@@ -19,6 +19,7 @@ function nodejs {
    apt-get -y update
    apt-get -y install nodejs
    mkdir /home/vagrant/.npm-packages
+   npm -g install grunt-cli
 }
 
 function nginx {

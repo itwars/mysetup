@@ -93,6 +93,7 @@ alias ll='ls -GFalh'
 alias la='ls -A'
 alias l='ls -CF'
 alias jekyllold='/var/lib/gems/1.9.1/gems/jekyll-0.12.1/bin/jekyll'
+alias compressorInstall='npm install grunt-uncss grunt-contrib-cssmin;cp ~/mysetup/gruntfile.js .'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
