@@ -15,7 +15,8 @@ function nodejs {
    myEcho "____________________"
    myEcho "Provisioning NodeJS "
    myEcho "____________________"
-   apt-add-repository -y ppa:chris-lea/node.js
+#   apt-add-repository -y ppa:chris-lea/node.js
+   curl -sL https://deb.nodesource.com/setup | sudo bash -
    apt-get -y update
    apt-get -y install nodejs
    mkdir /home/vagrant/.npm-packages
