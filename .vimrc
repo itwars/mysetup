@@ -86,3 +86,4 @@ endif
 " Line Number
 " --------------------------------------------
 let g:NumberToggleTrigger="<F3>"
+command! F :%!python -m json.tool
