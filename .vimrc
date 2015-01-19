@@ -6,14 +6,21 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jordwalke/flatlandia'
+Plugin 'molokai'
+Plugin 'vivkin/flatland.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'xterm-color-table.vim'
 Plugin 'SyntaxComplete'
 Plugin 'https://github.com/ervandew/supertab.git'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Bundle 'https://github.com/Raimondi/delimitMate.git'
-Bundle 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'https://github.com/Raimondi/delimitMate.git'
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'scrooloose/nerdtree'
+autocmd vimenter * NERDTree
+map <C-n> :NERDTreeToggle<CR>
+Plugin 'showhide.vim' "  zs Show all lines containing word under cursor / zh Hide all lines containing word under cursor / zn Open all folds
+
 call vundle#end() 
 filetype plugin indent on
 
@@ -23,7 +30,7 @@ set expandtab        	"replace <TAB> with spaces
 set softtabstop=3 
 set shiftwidth=3 
 let mapleader=" "
-set fillchars=""
+set fillchars+=vert:│
 set guioptions-=m                       " remove menubar
 set guioptions-=T                       " remove toolbar
 set guioptions-=r                       " remove right scrollbar
@@ -36,14 +43,23 @@ set synmaxcol=128
 set nocursorline "
 set number
 set backspace=2 " make backspace work like most other apps
-colors flatlandia
+" colors flatlandia
+" colors flatland
+" set background=dark
+" colorscheme solarized
 "colors vincent
+colors molokai
 hi Normal ctermfg=252 ctermbg=none " remove ugly background with picture
 set guifont=Monaco:h14
 
-set cursorline
-set cursorcolumn
-hi CursorLine term=bold cterm=bold guibg=Grey40
+"set cursorline
+"set cursorcolumn
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline cursorcolumn
+  au WinLeave * setlocal nocursorline nocursorcolumn
+augroup END
+hi CursorLine term=bold cterm=bold guibg=Grey10
 
 "Restore cursor to file position in previous editing session
 set viminfo='10,\"100,:20,%,n~/.viminfo
@@ -86,4 +102,8 @@ endif
 " Line Number
 " --------------------------------------------
 let g:NumberToggleTrigger="<F3>"
+
 command! F :%!python -m json.tool
+
+
+
