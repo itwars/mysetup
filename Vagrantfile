@@ -102,7 +102,7 @@ echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multi
 
 apt-get -y update
 apt-get -y dist-upgrade
-apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git
+apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common nvim mc sqlite git
 
 while test $# -gt 0
 do
@@ -127,6 +127,8 @@ git clone https://github.com/itwars/mysetup
 cp /home/vagrant/mysetup/.tmux.conf /home/vagrant/
 cp /home/vagrant/mysetup/.bashrc    /home/vagrant/
 cp /home/vagrant/mysetup/.vimrc     /home/vagrant/
+cp /home/vagrant/mysetup/.nvimrc     /home/vagrant/
+
 cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
 cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
 cd /home/vagrant/mysetup
