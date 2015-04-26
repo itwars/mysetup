@@ -3,10 +3,10 @@
 # for examples
 
 # If not running interactively, don't do anything
-#case $- in
-#    *i*) ;;
-#      *) return;;
-#esac
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -61,7 +61,7 @@ if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\  Ω '
 else
 #    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\ ☢ '
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\ Ω '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\ \[\033[01;32m\]Ω \[\033[0m\]'
  fi
 unset color_prompt force_color_prompt
 
@@ -93,7 +93,6 @@ alias ll='ls -GFalh'
 alias la='ls -A'
 alias l='ls -CF'
 alias jekyllold='/var/lib/gems/1.9.1/gems/jekyll-0.12.1/bin/jekyll'
-alias compressorInstall='npm install grunt-uncss grunt-contrib-cssmin;cp ~/mysetup/gruntfile.js .'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -119,15 +118,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export EDITOR=vim
+export EDITOR=nvim
 export TERM=xterm
-export LESS="-RS#3NM~g" 
+export LESS="-RS#3NM~g"
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-#alias vi='/usr/local/bin/vim'
-alias vi='vim'
+alias vi='/usr/local/bin/nvim'
 alias pro='cd ~/Documents/projects'
-alias UP='sudo apt-get update;sudo apt-get dist-upgrade;sudo apt-get autoremove;sudo apt-get autoclean'
+alias UP='sudo apt-get update;sudo apt-get dist-upgrade'
 alias c='chromium-browser > /dev/null 2>&1'
 alias scpr='rsync --rsh=ssh -av --progress --partial'
 alias web='sudo python -m SimpleHTTPServer 80'
@@ -136,9 +134,11 @@ alias vssh='vagrant ssh'
 alias vha='vagrant halt'
 alias umountdcard='diskutil unmountDisk /dev/disk1'
 alias listdisk='diskutil list'
-alias clean='sudo gem clean;brew cleanup;brew cask cleanup'
+alias clean='sudo gem clean;brew cleanup;brew-cask cleanup'
+alias subl='/Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
 
-. ~/mysetup/z.sh
+
+. ~/scripts/z.sh
 
 # Test de completion GEM
 alias gemdir='gem env gemdir'
@@ -210,30 +210,57 @@ ssh() {
     settitle "bash"
 }
 
+mp3() { 
+   youtube-dl $1 --extract-audio --title --audio-format mp3 --audio-quality 0 
+}
+
 # npm node without sudo
 NPM_PACKAGES="~/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH=$PATH:$NPM_PACKAGES/bin
-#export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export TERM=xterm-256color
 
-#if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
-#then
-#    STARTED_TMUX=1; export STARTED_TMUX
-#    sleep 1
-#    ( (tmux -2 has-session -t remote && tmux -2 attach-session -t remote) || (tmux -2 new-session -s remote) ) && exit 0
-#        echo "tmux failed to start"
-#    fi
+if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
+then
+    STARTED_TMUX=1; export STARTED_TMUX
+    sleep 1
+    ( (tmux -2 has-session -t remote && tmux -2 attach-session -t remote) || (tmux -2 new-session -s remote) ) && exit 0
+        echo "tmux failed to start"
+    fi
 
-#if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
-#       source `brew --prefix`/etc/bash_completion.d/vagrant
-#       source `brew --prefix`/etc/bash_completion.d/brew_bash_completion.sh
-#fi
+if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
+       source `brew --prefix`/etc/bash_completion.d/vagrant
+       source `brew --prefix`/etc/bash_completion.d/brew_bash_completion.sh
+fi
 export PATH=/usr/local/bin:$PATH:/usr/texbin
 export HOMEBREWCASKOPTS="--appdir=/Applications"
 
 
 alias irc='weechat irc://itwars@irc.freenode.net/#node.js,#go-nuts'
 
-export GOPATH=/Users/vrabah/gocode
+export GOPATH=/Users/vrabah/gocode/
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+#function brew() {
+#   if [ $1 = 'up' ]; then
+#      bUpdate=$(command brew update)
+#      if [ "$bUpdate" != "Already up-to-date." ]; then
+#         caskList=( $(brew cask list) )
+#         caskUpdate=()
+#         for i in "${caskList[@]}"; do
+#            info=( $(brew cask info $i) )
+#            if [[ " ${info[*]} " == *"Not installed"* ]]; then
+#               cask += ${info[0]%?}
+#            fi
+#         done
+#         echo ${info[*]}
+#      else
+#         echo $bUpdate
+#         echo 'Brew has nothing to update.'
+#      fi
+#   else
+#      command brew $1
+#   fi
+#}
