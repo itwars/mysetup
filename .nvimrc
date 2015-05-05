@@ -128,7 +128,7 @@ let g:tagbar_autofocus = 1
 " ┌──────────┐
 " │ NERDTree │
 " └──────────┘
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 "autocmd BufNew * wincmd l  " Autofocus to file on NerdTree
 let NERDTreeShowHidden=1   " Show hidden files in NerdTree
 "autocmd VimEnter * wincmd p
@@ -206,3 +206,32 @@ function! StatusBarToggle()
 endfunction
 nnoremap <silent> <F10> :call StatusBarToggle()<CR> 
 nnoremap <silent> <F9>  :Goyo<CR>
+
+au BufNewFile Dockerfile r ~/mysetup/templates/Dockerfile.txt
+
+""# Pull base image
+""FROM resin/rpi-raspbian:wheezy
+""MAINTAINER Vincent RABAH <vincent.rabah@gmail.com>
+""
+""# Install Node.js (from tarball)
+""RUN \
+""        apt-get update && \
+""        apt-get -y dist-upgrade && \
+""        apt-get install -y wget && \
+""        wget http://node-arm.herokuapp.com/node_latest_armhf.deb && \
+""        dpkg -i node_latest_armhf.deb && \
+""        apt-get remove -y wget && \
+""        apt-get clean -y && \
+""        apt-get autoclean -y && \
+""        apt-get autoremove -y && \
+""        rm -f node_latest_armhf.deb && \
+""        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+"        rm -rf /var/lib/{apt,dpkg,cache,log}/
+""
+""# Define working directory
+""WORKDIR /data
+""
+""# Define default command
+""CMD ["bash"]
+
+

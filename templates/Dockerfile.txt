@@ -1,0 +1,37 @@
+#┌───────────────────┐
+#│ Pull base image   │
+#└───────────────────┘
+FROM resin/rpi-raspbian:wheezy
+MAINTAINER Vincent RABAH <vincent.rabah@gmail.com>
+
+#┌─────────────────────┐
+#│   Install + CLeanup │
+#└─────────────────────┘
+RUN \
+   apt-get update && \
+   apt-get -y dist-upgrade && \
+   
+   apt-get install -y XXX  && \
+   
+   apt-get clean -y && \
+   apt-get autoclean -y && \
+   apt-get autoremove -y && \
+   rm -rf /tmp/*
+   rm -rf /var/lib/{apt,dpkg,cache,log,tmp}/*
+
+#┌────────────────────────────┐
+#│   Define working directory │
+#└────────────────────────────┘
+WORKDIR /data
+
+#┌─────────────────────────────┐
+#│   Expose some tcp/udp ports │
+#└─────────────────────────────┘
+EXPOSE 53
+EXPOSE 53/udp
+
+
+#┌──────────────────────────┐
+#│   Define default command │
+#└──────────────────────────┘
+CMD ["bash"]
