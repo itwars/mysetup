@@ -1,7 +1,7 @@
 "   ┌───────────────────────────┐
 "   │ NeoVim configuration file │
 "   │ Author: Vincent RABAH     │
-"   │ Update date: 2015-02-03   │
+"   │ Update date: 2015-06-01   │
 "   └───────────────────────────┘
 
 " ┌─────────┐
