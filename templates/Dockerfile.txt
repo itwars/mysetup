@@ -9,9 +9,9 @@ MAINTAINER Vincent RABAH <vincent.rabah@gmail.com>
 #└─────────────────────┘
 RUN \
    apt-get update && \
-   apt-get -y dist-upgrade && \
+   apt-get -y dist-upgrade --no-install-recommends && \
    
-   apt-get install -y XXX  && \
+   apt-get install -y XXX --no-install-recommends && \
    
    apt-get clean -y && \
    apt-get autoclean -y && \
