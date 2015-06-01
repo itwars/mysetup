@@ -207,31 +207,26 @@ endfunction
 nnoremap <silent> <F10> :call StatusBarToggle()<CR> 
 nnoremap <silent> <F9>  :Goyo<CR>
 
+"┌──────────────────────┐
+"│ Dockerfile Temaplate │
+"└──────────────────────┘
+
 au BufNewFile Dockerfile r ~/mysetup/templates/Dockerfile.txt
 
-""# Pull base image
-""FROM resin/rpi-raspbian:wheezy
-""MAINTAINER Vincent RABAH <vincent.rabah@gmail.com>
-""
-""# Install Node.js (from tarball)
-""RUN \
-""        apt-get update && \
-""        apt-get -y dist-upgrade && \
-""        apt-get install -y wget && \
-""        wget http://node-arm.herokuapp.com/node_latest_armhf.deb && \
-""        dpkg -i node_latest_armhf.deb && \
-""        apt-get remove -y wget && \
-""        apt-get clean -y && \
-""        apt-get autoclean -y && \
-""        apt-get autoremove -y && \
-""        rm -f node_latest_armhf.deb && \
-""        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-"        rm -rf /var/lib/{apt,dpkg,cache,log}/
-""
-""# Define working directory
-""WORKDIR /data
-""
-""# Define default command
-""CMD ["bash"]
+"┌─────────────────┐
+"│ Relative Number │
+"└─────────────────┘
 
-
+set relativenumber number
+au FocusLost * :set norelativenumber number
+au FocusGained * :set relativenumber
+autocmd InsertEnter * :set norelativenumber number
+autocmd InsertLeave * :set relativenumber
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber number
+  else
+    set relativenumber
+  endif
+endfunc
+nnoremap <C-n> :call NumberToggle()<cr>
