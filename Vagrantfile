@@ -15,12 +15,9 @@ function nodejs {
    myEcho "____________________"
    myEcho "Provisioning NodeJS "
    myEcho "____________________"
-#   apt-add-repository -y ppa:chris-lea/node.js
-   curl -sL https://deb.nodesource.com/setup | sudo bash -
+   apt-add-repository -y ppa:chris-lea/node.js
    apt-get -y update
    apt-get -y install nodejs
-   mkdir /home/vagrant/.npm-packages
-   npm -g install grunt-cli
 }
 
 function nginx {
@@ -31,21 +28,15 @@ function nginx {
    apt-get -y update
    apt-get install -y nginx
    cat > /etc/nginx/sites-available/default << EOF
-
 server {
-        listen 80 default_server;
+        listen 80;
         root /vagrant;
+        index index.html index.htm;
+        server_name localhost;
+        server_tokens off;
 
         location / {
-                try_files  $uri $uri/ /index.php$is_args$args;
-        }
-
-        location ~ .php$ {
-               try_files $uri /index.php =404;
-               fastcgi_pass 127.0.0.1:9000;
-               fastcgi_index index.php;
-               fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-               include fastcgi_params;
+                try_files $uri $uri/ /index.html;
         }
         location ~ \.(ico|css|js|gif|jpg|jpeg|png|gz|ttf|woff|svg|eot|json) {
                 expires max;
@@ -59,9 +50,14 @@ server {
                 add_header Cache-Control "public, must-revalidate, proxy-revalidate";
                 add_header X-Powered-By "NodeJS";
         }
+
+        location ~ .php$ {
+
+               fastcgi_pass 127.0.0.1:9000;
+               fastcgi_index index.php;
+               include fastcgi_params;
+        }
 }
-
-
 EOF
    service nginx restart
 }
@@ -102,7 +98,7 @@ echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multi
 
 apt-get -y update
 apt-get -y dist-upgrade
-apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common nvim mc sqlite git
+apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git
 
 while test $# -gt 0
 do
@@ -123,34 +119,29 @@ done
 
 apt-get -y autoremove
 apt-get -y autoclean
-git clone https://github.com/itwars/mysetup
-cp /home/vagrant/mysetup/.tmux.conf /home/vagrant/
-cp /home/vagrant/mysetup/.bashrc    /home/vagrant/
-cp /home/vagrant/mysetup/.vimrc     /home/vagrant/
-cp /home/vagrant/mysetup/.nvimrc     /home/vagrant/
+cp /vagrant/mysetup/.tmux.conf /home/vagrant/
+cp /vagrant/mysetup/.bashrc /home/vagrant/
+cp /vagrant/mysetup/.vimrc /home/vagrant/
 
-cp /home/vagrant/mysetup/.gemrc     /home/vagrant/
-cp /home/vagrant/mysetup/.gitconfig /home/vagrant/
-cd /home/vagrant/mysetup
-wget https://raw.githubusercontent.com/rupa/z/master/z.sh
-git clone https://github.com/gmarik/Vundle.vim.git /home/vagrant/.vim/bundle/Vundle.vim
-timedatectl set-timezone Europe/Paris
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   config.vm.define "MyVagrantBox" do "MyVagrantBox"
+   config.vm.define "obs" do |obs|
    end
    config.vm.box = "trusty64-LTS"
+#   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
    config.vm.provision "shell", inline: $script , args: ["nginx","php","mysql","nodejs"]
-   config.vm.network :forwarded_port, guest: 3000, host: 3000
-   config.vm.network :forwarded_port, guest: 80, host: 8080
+   config.vm.network :forwarded_port, guest: 8000, host: 8000
    config.vm.network :forwarded_port, guest: 3001, host: 3001
+   config.vm.network :forwarded_port, guest: 3000, host: 3000
+   config.vm.network :forwarded_port, guest: 80, host: 80
    config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", 1024]
-      vb.customize ["modifyvm", :id, "--cpus", 2]
+      vb.customize ["modifyvm", :id, "--memory", 640]
+      vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.customize ["modifyvm", :id, "--chipset", "ich9"]
-      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
+      #vb.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
    end
 end
