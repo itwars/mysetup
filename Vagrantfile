@@ -15,7 +15,8 @@ function nodejs {
    myEcho "____________________"
    myEcho "Provisioning NodeJS "
    myEcho "____________________"
-   apt-add-repository -y ppa:chris-lea/node.js
+   curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+   #apt-add-repository -y ppa:chris-lea/node.js
    apt-get -y update
    apt-get -y install nodejs
 }
@@ -88,6 +89,22 @@ function mysql {
    (crontab -u vagrant -l ; echo "00 16 * * * /vagrant/mysetup/backup-mysql.sh") | crontab -u vagrant -
 }
 
+function neovim {
+   myEcho "____________________"
+   myEcho "Provisioning NeoVim "
+   myEcho "____________________"
+   add-apt-repository ppa:neovim-ppa/unstable
+   apt-get updatei -y
+   apt-get install -y python-dev python-pip python3-dev python3-pip neovim
+}
+
+function docker {
+   myEcho "____________________"
+   myEcho "Provisioning Docker "
+   myEcho "____________________"
+   wget -qO- https://get.docker.com/ | sh
+}
+
 myEcho "____________________"
 myEcho "I am provisioning..."
 myEcho "____________________"
@@ -98,7 +115,10 @@ echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multi
 
 apt-get -y update
 apt-get -y dist-upgrade
-apt-get -y install curl python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git
+apt-get -y install curl wget python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git linux-generic-lts-vivid
+
+neovim
+docker
 
 while test $# -gt 0
 do
