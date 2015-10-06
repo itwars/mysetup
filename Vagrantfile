@@ -108,10 +108,10 @@ function docker {
 myEcho "____________________"
 myEcho "I am provisioning..."
 myEcho "____________________"
-echo deb http://archive.ubuntu.com/ubuntu  trusty            main universe multiverse              > /etc/apt/sources.list
-echo deb http://archive.ubuntu.com/ubuntu  trusty-updates    main universe multiverse              >>/etc/apt/sources.list
-echo deb http://archive.ubuntu.com/ubuntu  trusty-backports  main restricted universe multiverse   >>/etc/apt/sources.list
-echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multiverse              >>/etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid            main universe multiverse              > /etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid-updates    main universe multiverse              >>/etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid-backports  main restricted universe multiverse   >>/etc/apt/sources.list
+echo deb http://security.ubuntu.com/ubuntu vivid-security   main universe multiverse              >>/etc/apt/sources.list
 
 apt-get -y update
 apt-get -y dist-upgrade
@@ -139,6 +139,7 @@ done
 
 apt-get -y autoremove
 apt-get -y autoclean
+git clone https://github.com/itwars/mysetup
 cp /vagrant/mysetup/.tmux.conf /home/vagrant/
 cp /vagrant/mysetup/.bashrc /home/vagrant/
 cp /vagrant/mysetup/.vimrc /home/vagrant/
@@ -148,7 +149,7 @@ SCRIPT
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.define "obs" do |obs|
    end
-   config.vm.box = "trusty64-LTS"
+   config.vm.box = "ubuntu/vivid64"
 #   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
    config.vm.provision "shell", inline: $script , args: ["nginx","php","mysql","nodejs"]
    config.vm.network :forwarded_port, guest: 8000, host: 8000
