@@ -14,11 +14,13 @@ echo -e "\e[34m$1\e[39m"
 function nodejs {
    myEcho "____________________"
    myEcho "Provisioning NodeJS "
-   myEcho "____________________"
+   yEcho "____________________"
    curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
    #apt-add-repository -y ppa:chris-lea/node.js
    apt-get -y update
    apt-get -y install nodejs
+   mkdir ~/.npm-packages
+   npm config set prefix ~/.npm-packages/
 }
 
 function nginx {
@@ -96,6 +98,8 @@ function neovim {
    add-apt-repository ppa:neovim-ppa/unstable
    apt-get updatei -y
    apt-get install -y python-dev python-pip python3-dev python3-pip neovim
+   git clone https://github.com/VundleVim/Vundle.vim.git ~/.nvim/bundle/Vundle.vim
+   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 }
 
 function docker {
@@ -108,14 +112,15 @@ function docker {
 myEcho "____________________"
 myEcho "I am provisioning..."
 myEcho "____________________"
-echo deb http://archive.ubuntu.com/ubuntu  trusty            main universe multiverse              > /etc/apt/sources.list
-echo deb http://archive.ubuntu.com/ubuntu  trusty-updates    main universe multiverse              >>/etc/apt/sources.list
-echo deb http://archive.ubuntu.com/ubuntu  trusty-backports  main restricted universe multiverse   >>/etc/apt/sources.list
-echo deb http://security.ubuntu.com/ubuntu trusty-security   main universe multiverse              >>/etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid            main universe multiverse              > /etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid-updates    main universe multiverse              >>/etc/apt/sources.list
+echo deb http://archive.ubuntu.com/ubuntu  vivid-backports  main restricted universe multiverse   >>/etc/apt/sources.list
+echo deb http://security.ubuntu.com/ubuntu vivid-security   main universe multiverse              >>/etc/apt/sources.list
 
 apt-get -y update
 apt-get -y dist-upgrade
 apt-get -y install curl wget python g++ make checkinstall binutils gcc patch software-properties-common vim mc sqlite git linux-generic-lts-vivid
+wget https://raw.githubusercontent.com/rupa/z/master/z.sh
 
 neovim
 docker
@@ -139,8 +144,10 @@ done
 
 apt-get -y autoremove
 apt-get -y autoclean
+git clone https://github.com/itwars/mysetup
 cp /vagrant/mysetup/.tmux.conf /home/vagrant/
 cp /vagrant/mysetup/.bashrc /home/vagrant/
+cp /vagrant/mysetup/.vimrc /home/vagrant/.nvimrc
 cp /vagrant/mysetup/.vimrc /home/vagrant/
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 ln -s ~/.vim $XDG_CONFIG_HOME/nvim
@@ -149,17 +156,16 @@ ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-   config.vm.define "obs" do |obs|
+   config.vm.define "vbox" do |vbox|
    end
-   config.vm.box = "trusty64-LTS"
-#   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+   config.vm.box = "ubuntu/vivid64"
    config.vm.provision "shell", inline: $script , args: ["nginx","php","mysql","nodejs"]
    config.vm.network :forwarded_port, guest: 8000, host: 8000
    config.vm.network :forwarded_port, guest: 3001, host: 3001
    config.vm.network :forwarded_port, guest: 3000, host: 3000
    config.vm.network :forwarded_port, guest: 80, host: 80
    config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", 640]
+      vb.customize ["modifyvm", :id, "--memory", 512]
       vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.customize ["modifyvm", :id, "--chipset", "ich9"]
       #vb.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]

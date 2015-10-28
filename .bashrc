@@ -123,7 +123,7 @@ export TERM=xterm
 export LESS="-RS#3NM~g"
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-alias vi='/usr/local/bin/nvim'
+alias vi='/usr/bin/nvim'
 alias pro='cd ~/Documents/projects'
 alias UP='sudo apt-get update;sudo apt-get dist-upgrade'
 alias c='chromium-browser > /dev/null 2>&1'
@@ -134,11 +134,10 @@ alias vssh='vagrant ssh'
 alias vha='vagrant halt'
 alias umountdcard='diskutil unmountDisk /dev/disk1'
 alias listdisk='diskutil list'
-alias clean='sudo gem clean;brew cleanup;brew-cask cleanup'
 alias subl='/Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text'
 
 
-. ~/scripts/z.sh
+. ~/z.sh
 
 # Test de completion GEM
 alias gemdir='gem env gemdir'
@@ -230,10 +229,6 @@ then
         echo "tmux failed to start"
     fi
 
-if [ -f `brew --prefix`/etc/bash_completion.d/vagrant ]; then
-       source `brew --prefix`/etc/bash_completion.d/vagrant
-       source `brew --prefix`/etc/bash_completion.d/brew_bash_completion.sh
-fi
 export PATH=/usr/local/bin:$PATH:/usr/texbin
 export HOMEBREWCASKOPTS="--appdir=/Applications"
 
@@ -243,7 +238,6 @@ alias irc='weechat irc://itwars@irc.freenode.net/#node.js,#go-nuts'
 export GOPATH=/Users/vrabah/gocode/
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-#function brew() {
 #   if [ $1 = 'up' ]; then
 #      bUpdate=$(command brew update)
 #      if [ "$bUpdate" != "Already up-to-date." ]; then
